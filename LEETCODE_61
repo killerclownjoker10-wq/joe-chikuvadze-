@@ -1,0 +1,36 @@
+class Solution {
+public:
+    ListNode* rotateRight(ListNode* head, int k) {
+        if (head == nullptr || head->next == nullptr || k == 0) {
+            return head;
+        }
+
+        ListNode* temp = head;
+        int length = 1;
+
+        // Find the length and last node
+        while (temp->next != nullptr) {
+            temp = temp->next;
+            length++;
+        }
+
+        // Connect the list into a circle
+        temp->next = head;
+
+        // Calculate the new tail position
+        k = k % length;
+        int steps = length - k;
+
+        temp = head;
+
+        for (int i = 1; i < steps; i++) {
+            temp = temp->next;
+        }
+
+        // Break the circle
+        ListNode* newHead = temp->next;
+        temp->next = nullptr;
+
+        return newHead;
+    }
+};
